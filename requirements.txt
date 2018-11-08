@@ -1,0 +1,4 @@
+websocket-client==0.46.0
+beautifulsoup4
+slackclient
+python-dotenv
