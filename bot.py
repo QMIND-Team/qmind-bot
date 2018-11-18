@@ -1,8 +1,7 @@
 import os
 import re
 import time
-from commands import help_me
-from commands import get_gif
+from commands import help_me, get_gif
 from dotenv import load_dotenv
 from slackclient import SlackClient
 
@@ -40,7 +39,7 @@ def parse_direct_mention(message_text):
 
 def handle_command(command, channel):
     # Default response is help text for the user
-    default_response = f"Howdy :sad_cowboy:! I'm geoff, the QMIND Bot that makes your lives easier. Try me out by using a command like *{HELP_COMMAND} or {GIF_COMMAND}*!"
+    default_response = f"Howdy :sad_cowboy:! I'm geoff, the QMIND Bot that makes your lives easier. Try me out by using a command like *{HELP_COMMAND}* or *{GIF_COMMAND}*!"
 
     # Finds and executes the given command, filling in response
     response = None
