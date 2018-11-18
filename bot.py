@@ -12,7 +12,7 @@ load_dotenv()
 slack_client = SlackClient(os.environ.get('BOT_OAUTH_TOKEN'))
 starterbot_id = None
 
-#Get API key for giphy
+# Get API key for giphy
 giphy_api_key = os.environ.get("BOT_GIPHY_API_KEY")
 
 # constants
@@ -58,13 +58,16 @@ def handle_command(command, channel):
 
 
 if __name__ == "__main__":
-    if slack_client.rtm_connect(with_team_state=False, auto_reconnect=True):
-        print("Starter Bot connected and running!")
-        starterbot_id = slack_client.api_call("auth.test")["user_id"]
-        while(True):
-            command, channel = parse_bot_commands(slack_client.rtm_read())
-            if command:
-                handle_command(command, channel)
-            time.sleep(RTM_READ_DELAY)
-    else:
-        print("Connection failed. See above for exception")
+    try:
+        if slack_client.rtm_connect(with_team_state=False, auto_reconnect=True):
+            print("Starter Bot connected and running!")
+            starterbot_id = slack_client.api_call("auth.test")["user_id"]
+            while(True):
+                command, channel = parse_bot_commands(slack_client.rtm_read())
+                if command:
+                    handle_command(command, channel)
+                time.sleep(RTM_READ_DELAY)
+        else:
+            print("Connection failed. See above for exception")
+    except Exception as e:
+        print(e)
