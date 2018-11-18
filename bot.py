@@ -2,6 +2,7 @@ import os
 import re
 import time
 from commands import help_me
+from commands import get_gif
 from dotenv import load_dotenv
 from slackclient import SlackClient
 
@@ -12,9 +13,13 @@ load_dotenv()
 slack_client = SlackClient(os.environ.get('BOT_OAUTH_TOKEN'))
 starterbot_id = None
 
+#Get API key for giphy
+giphy_api_key = os.environ.get("BOT_GIPHY_API_KEY")
+
 # constants
 RTM_READ_DELAY = 1
 HELP_COMMAND = "help"
+GIF_COMMAND = "gif"
 MENTION_REGEX = "^<@(|[WU].+?)>(.*)"
 
 
@@ -35,12 +40,15 @@ def parse_direct_mention(message_text):
 
 def handle_command(command, channel):
     # Default response is help text for the user
-    default_response = f"Howdy :sad_cowboy:! I'm geoff, the QMIND Bot that makes your lives easier. Try me out by using a command like *{HELP_COMMAND}*!"
+    default_response = f"Howdy :sad_cowboy:! I'm geoff, the QMIND Bot that makes your lives easier. Try me out by using a command like *{HELP_COMMAND} or {GIF_COMMAND}*!"
 
     # Finds and executes the given command, filling in response
     response = None
     if command.startswith(HELP_COMMAND):
         response = help_me(command)
+
+    elif command.startswith(GIF_COMMAND):
+        response = get_gif.get_gif(command, giphy_api_key)
 
     # Sends the response back to the channel
     slack_client.api_call(
