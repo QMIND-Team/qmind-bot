@@ -1,3 +1,4 @@
+from datetime import date
 # Methods for printing out info about Geoff
 
 def getCommands():
@@ -10,4 +11,9 @@ def getCommands():
            "\t\t\t\t_i.e_. `@geoff help how do interfaces work?`\n\n" \
            "\t:ye: *rooms*: Enter the date to find when ILC rooms are free :books:" \
            " No inputted date will default to today!\n" \
-           "\t\t\t\t_i.e._ `@geoff rooms 12/25/18` _[format is DD/MM/YY]_"
+           "\t\t\t\t_i.e._ `@geoff rooms " + getDate() + "` _[format is DD/MM/YY]_"
+
+
+def getDate():
+       today = date.today()
+       return f"{today.day}/{today.month}/" + f"{today.year}"[2:]
