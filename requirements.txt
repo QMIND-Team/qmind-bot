@@ -3,3 +3,4 @@ beautifulsoup4
 slackclient
 python-dotenv
 giphy_client
+selenium
