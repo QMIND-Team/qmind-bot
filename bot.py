@@ -5,7 +5,7 @@ load_dotenv()
 import os
 import re
 import time
-from commands import help_me, get_gif, rooms
+from commands import help_me, get_gif, rooms, info
 
 from slackclient import SlackClient
 
@@ -21,6 +21,7 @@ RTM_READ_DELAY = 1
 HELP_COMMAND = "help"
 GIF_COMMAND = "gif"
 ROOMS_COMMAND = "rooms"
+INFO_COMMAND = "info"
 MENTION_REGEX = "^<@(|[WU].+?)>(.*)"
 DIBS_USERNAME = os.environ.get('DIBS_USERNAME')
 DIBS_PASSWORD = os.environ.get('DIBS_PASSWORD')
@@ -61,6 +62,8 @@ def handle_command(command, channel):
         )
         response = rooms.check(command, DIBS_USERNAME, DIBS_PASSWORD)
 
+    elif command.startswith(INFO_COMMAND):
+        response = info.getCommands()
     # Sends the response back to the channel
     slack_client.api_call(
         "chat.postMessage",
